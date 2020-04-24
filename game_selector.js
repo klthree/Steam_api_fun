@@ -6,9 +6,9 @@ const gamesUrl = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001
 request({url: gamesUrl, json: true}, (error, response) => {
     const gamesList = response.body.response.games
 //    gamesList.forEach(game => console.log(game.name))
-    console.log("You have " + response.body.response.game_count + " games in your Steam library")
+    console.log("\nYou have " + response.body.response.game_count + " games in your Steam library")
     const unplayedGames = gamesList.filter(game => game.playtime_forever == 0)
-    console.log("Of those " + gamesList.length + " games, you have "
+    console.log("Of those games, you have "
                 + unplayedGames.length + " that you haven't played at all\n")
 
     const unplayedGameIndex = getRandomIntInclusive(0, unplayedGames.length)
@@ -25,6 +25,7 @@ request({url: gamesUrl, json: true}, (error, response) => {
         cumPlaytime = Math.round((mostPlayedGames[i].playtime_forever / 60) * 10) / 10
         console.log(i + 1 + "." + mostPlayedGames[i].name + " with " + cumPlaytime + " hours on record")
     }
+    console.log()
 })
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -34,18 +35,3 @@ function getRandomIntInclusive(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function findMostPlayedGame(gameArray) {
-        // gameArray.sort(function (a, b) {
-        //                         a.playtime_forever - b.playtime_forever
-        //                     })
-    
-        maxPlaytime = 0
-        mostPlayedGame = ""
-        gameArray.forEach(game => {if(game.playtime_forever > maxPlaytime) 
-                                                    {maxPlaytime = game.playtime_forever
-                                                     mostPlayedGame = game.name}
-                                  
-        })
-        
-        return mostPlayedGame
-}
