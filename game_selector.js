@@ -7,10 +7,11 @@ const gamesUrl = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001
 request({url: gamesUrl, json: true}, (error, response) => {
     const gamesList = response.body.response.games
 //    gamesList.forEach(game => console.log(game.name))
-    console.log(chalk.underline.cyan("\nYou have " + response.body.response.game_count + " games in your Steam library"))
+
+    console.log(chalk.blue.bold("\nYou have " + response.body.response.game_count + " games in your Steam library"))
     const unplayedGames = gamesList.filter(game => game.playtime_forever == 0)
     console.log("Of those games, you have "
-                + unplayedGames.length + " that you haven't played at all\n")
+                + chalk.red(unplayedGames.length) + " that you haven't played at all\n")
 
     const unplayedGameIndex = getRandomIntInclusive(0, unplayedGames.length)
     const unplayedGame = unplayedGames[unplayedGameIndex].name
