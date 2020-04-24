@@ -1,12 +1,13 @@
 const request = require('request')
 const yargs = require('yargs')
+const chalk = require('chalk')
 
 const gamesUrl = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=2B8A7BCA6AD260CFFD604D28C9A0FF6E&steamid=76561198014891321&format=json&include_appinfo=true'
 
 request({url: gamesUrl, json: true}, (error, response) => {
     const gamesList = response.body.response.games
 //    gamesList.forEach(game => console.log(game.name))
-    console.log("\nYou have " + response.body.response.game_count + " games in your Steam library")
+    console.log(chalk.underline.cyan("\nYou have " + response.body.response.game_count + " games in your Steam library"))
     const unplayedGames = gamesList.filter(game => game.playtime_forever == 0)
     console.log("Of those games, you have "
                 + unplayedGames.length + " that you haven't played at all\n")
