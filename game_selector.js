@@ -1,8 +1,8 @@
 const request = require('request')
 const yargs = require('yargs')
 const chalk = require('chalk')
-
-const gamesUrl = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=2B8A7BCA6AD260CFFD604D28C9A0FF6E&steamid=76561198014891321&format=json&include_appinfo=true'
+const steam_key = require('./key')()
+const gamesUrl = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + steam_key + '&steamid=76561198014891321&format=json&include_appinfo=true'
 
 request({url: gamesUrl, json: true}, (error, response) => {
     const gamesList = response.body.response.games
